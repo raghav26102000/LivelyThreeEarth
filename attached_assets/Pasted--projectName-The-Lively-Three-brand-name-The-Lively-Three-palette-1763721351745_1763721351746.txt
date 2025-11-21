@@ -1,0 +1,122 @@
+{
+  "projectName": "The Lively Three",
+  "brand": {
+    "name": "The Lively Three",
+    "palette": {
+      "deepGreen": "#1D5E3B",
+      "leafGreen": "#A2D39C",
+      "lightBg": "#F5F5F5",
+      "darkAccent": "#0E2F24"
+    },
+    "typography": "Modern Sans-Serif, medium weight"
+  },
+  "themeToggle": {
+    "enabled": true,
+    "modes": ["light", "dark"]
+  },
+  "scenes": [
+    {
+      "id": "scene1",
+      "title": "Intro Macro Plant + Grain Particles",
+      "durationSeconds": 6,
+      "elements": [
+        {"type": "3DModel", "model": "plant_leaf_unfurl", "animation": "unfurl_from_bottom", "startDelay": 0},
+        {"type": "ParticleSystem", "particles": ["oats", "quinoa", "legumes"], "motion": "rise_up", "startDelay": 1}
+      ],
+      "camera": {
+        "motion": "pull_back_slow",
+        "easing": "cubic-ease-out"
+      },
+      "sound": {
+        "ambient": "breeze",
+        "effect": "soft_mechanical_hum"
+      }
+    },
+    {
+      "id": "scene2",
+      "title": "Three-Panel Layout Emerges",
+      "durationSeconds": 8,
+      "transitionFrom": "scene1",
+      "panels": [
+        {"position": "left", "content": {"type": "3DModel", "model": "globe_plant_veins", "spinSpeed": "10deg/second"} },
+        {"position": "middle", "content": {"type": "infographicColumn", "icons": ["Fibre","Protein","Micronutrients"], "animation": "scaleBounce", "stagger": 0.8} },
+        {"position": "right", "content": {"type": "connectionArcs", "from": "icons", "to": "globe", "drawTime": 1}}
+      ],
+      "easing": "ease-out",
+      "sound": {"iconPings": true}
+    },
+    {
+      "id": "scene3",
+      "title": "App Mock-up & CTA",
+      "durationSeconds": 8,
+      "transitionFrom": "scene2",
+      "elements": [
+        {"type": "3DModel", "model": "smartphone_mockup", "animation": "float_in_center"},
+        {"type": "UI", "screen": "dashboard", "stats": {"fibre": "count-up", "protein": "count-up", "micronutrients": "count-up", "community": "count-up"} },
+        {"type": "Button", "text": "Join the Movement – Launching Soon", "animation": "pulse", "loopTime": 1.8}
+      ],
+      "interaction": {
+        "hoverDesktop": {"tilt": true, "scale": 1.02},
+        "tapMobile": {"expand": true, "focusCycle": ["fibre","protein","micronutrients"]}
+      },
+      "sound": {"countFinishBeep": true}
+    },
+    {
+      "id": "scene4",
+      "title": "Scroll Interaction & Parallax Background",
+      "trigger": "scroll",
+      "elements": [
+        {"type": "3DModel", "model": "globe_full", "animation": "expand_to_fullwidth"},
+        {"type": "DataNodes", "animation": "fly_out_and_converge", "target": "smartphone_UI"},
+        {"type": "ParticleBackground", "shape": "leaf", "interaction": {"mouseParallax": true, "depthLayers": true}}
+      ],
+      "hoverTooltips": [
+        {"targetIcon": "Fibre", "tooltip": "Only 1 in 10 people hit their daily fibre target."},
+        {"targetIcon": "Protein", "tooltip": "…"},
+        {"targetIcon": "Micronutrients", "tooltip": "…"}
+      ],
+      "sound": {"tooltipPop": true}
+    },
+    {
+      "id": "scene5",
+      "title": "Footer & Final CTA",
+      "trigger": "scrollEnd",
+      "elements": [
+        {"type": "GradientBg", "colors": ["#1D5E3B","#A2D39C"], "animation": "gradientShift"},
+        {"type": "Card", "content": {"type": "EmailSubscribe", "animationIn": "slide_up", "delay": 0.5}},
+        {"type": "3DModel", "model": "plant_vein_orb", "spinSpeed": "5deg/second"},
+        {"type": "Button", "text": "Get notified when we launch", "animation": "pulse", "loopTime": 1.8}
+      ],
+      "sound": {"subscribeChime": true}
+    }
+  ],
+  "responsive": {
+    "breakpoints": {
+      "desktop": {"minWidth": 1200, "layout": "three-panel"},
+      "tablet": {"minWidth": 768, "layout": "two-panel"},
+      "mobile": {"maxWidth": 767, "layout": "single-column", "particleCount": 0.6}
+    },
+    "themeToggle": true
+  },
+  "animationSettings": {
+    "easings": {
+      "camera": "ease-in-out",
+      "iconEntrance": "bounce",
+      "buttonPulse": "loop",
+      "tooltip": "ease-out"
+    },
+    "durations": {
+      "iconEntrance": 0.8,
+      "arcDraw": 1,
+      "buttonPulseLoop": 1.8,
+      "tooltipFadeIn": 0.5
+    }
+  },
+  "developerNotes": {
+    "exportFormat": "WebGL/Three.js",
+    "framework": "Next.js",
+    "loading": {"type": "leaf_spinner", "animation": "rotate", "until": "scene1_start"},
+    "accessibility": {"ariaLabels": true, "keyboardFocus": true, "contrastWCAG": true},
+    "performance": {"mobileTargetFPS": 60, "reduceParticleCount": true}
+  }
+}
