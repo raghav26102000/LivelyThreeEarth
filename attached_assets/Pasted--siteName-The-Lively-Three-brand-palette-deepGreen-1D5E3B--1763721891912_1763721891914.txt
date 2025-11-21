@@ -1,0 +1,219 @@
+{
+  "siteName": "The Lively Three",
+  "brand": {
+    "palette": {
+      "deepGreen": "#1D5E3B",
+      "leafGreen": "#A2D39C",
+      "lightBg": "#F5F5F5",
+      "darkAccent": "#0E2F24"
+    },
+    "typography": "Modern Sans-Serif, medium weight"
+  },
+  "themeToggle": {
+    "enabled": true,
+    "modes": ["light", "dark"]
+  },
+  "pages": [
+    {
+      "pageId": "landing",
+      "title": "Landing Page",
+      "scenes": [
+        {
+          "id": "scene1_intro",
+          "title": "Intro Macro Plant + Grain Particles",
+          "durationSeconds": 6,
+          "elements": [
+            {"type": "3DModel", "model": "mdl_leaf_unfurl", "animation": "unfurl_from_bottom", "startDelay": 0},
+            {"type": "ParticleSystem", "particles": ["oats","quinoa","legumes"], "motion": "rise_up", "startDelay": 1}
+          ],
+          "camera": {"motion": "pull_back_slow", "easing": "cubic-ease-out"},
+          "sound": {"ambient": "breeze", "effect": "soft_mechanical_hum"}
+        },
+        {
+          "id": "scene2_threePanel",
+          "title": "Three-Panel Layout Emerges",
+          "durationSeconds": 8,
+          "transitionFrom": "scene1_intro",
+          "panels": [
+            {"position": "left", "content": {"type": "3DModel", "model": "mdl_globe_plant", "spinSpeed": "10deg/second"}},
+            {"position": "middle", "content": {"type": "infographicColumn", "icons": ["icn_fibre_leaf","icn_protein_bean","icn_micronutrient_pill"], "animation": "scaleBounce", "stagger": 0.8}},
+            {"position": "right", "content": {"type": "3DModel", "model": "mdl_smartphone_mockup", "floatAnimation": true}}
+          ],
+          "connections": {"fromIcons": true, "toGlobe": true, "arcDrawTime": 1},
+          "sound": {"iconPings": true}
+        },
+        {
+          "id": "scene3_appMockupCT A",
+          "title": "App Mock-up & CTA",
+          "durationSeconds": 8,
+          "transitionFrom": "scene2_threePanel",
+          "elements": [
+            {"type": "3DModel", "model": "mdl_smartphone_mockup", "animation": "float_in_center"},
+            {"type": "UI", "screen": "dashboard", "stats": {"fibre": "countUp", "protein": "countUp", "micronutrients": "countUp", "community": "countUp"}},
+            {"type": "Button", "id": "btn_primary_cta", "text": "Join the Movement – Launching Soon", "animation": "pulse", "loopTime": 1.8}
+          ],
+          "interaction": {
+            "hoverDesktop": {"tilt": true, "scale": 1.02},
+            "tapMobile": {"expand": true, "focusCycle": ["fibre","protein","micronutrients"]}
+          },
+          "sound": {"countFinishBeep": true}
+        },
+        {
+          "id": "scene4_scrollParallax",
+          "title": "Scroll Interaction & Parallax Background",
+          "trigger": "scroll",
+          "elements": [
+            {"type": "3DModel", "model": "mdl_globe_full", "animation": "expand_to_fullwidth"},
+            {"type": "DataNodes", "animation": "fly_out_and_converge", "target": "smartphone_UI"},
+            {"type": "ParticleBackground", "shape": "leaf", "interaction": {"mouseParallax": true, "depthLayers": true}}
+          ],
+          "hoverTooltips": [
+            {"targetIcon": "icn_fibre_leaf", "tooltip": "Only 1 in 10 people hit their daily fibre target."},
+            {"targetIcon": "icn_protein_bean", "tooltip": "Stay on track with your plant-protein goals."},
+            {"targetIcon": "icn_micronutrient_pill", "tooltip": "Micronutrients matter—track the small stuff."}
+          ],
+          "sound": {"tooltipPop": true}
+        },
+        {
+          "id": "scene5_footer",
+          "title": "Footer & Final CTA",
+          "trigger": "scrollEnd",
+          "elements": [
+            {"type": "GradientBg", "colors": ["#1D5E3B","#A2D39C"], "animation": "gradientShift"},
+            {"type": "Card", "content": {"type": "EmailSubscribe"}, "animation": "slide_up", "delay": 0.5},
+            {"type": "3DModel", "model": "mdl_plant_orb", "spinSpeed": "5deg/second"},
+            {"type": "Button", "id": "btn_subscribe", "text": "Get notified when we launch", "animation": "pulse", "loopTime": 1.8}
+          ],
+          "sound": {"subscribeChime": true}
+        }
+      ]
+    },
+    {
+      "pageId": "about",
+      "title": "About Us",
+      "status": "Under Construction",
+      "scenes": [
+        {
+          "id": "about_scene1",
+          "title": "Vision Statement Animation",
+          "durationSeconds": 6,
+          "elements": [
+            {"type": "TextReveal", "text": "One simple app for smarter fibre, protein, and micronutrients.", "animation": "typewriterFade", "startDelay": 0},
+            {"type": "3DModel", "model": "mdl_earth_plants", "animation": "slow_rotate", "startDelay": 1}
+          ],
+          "sound": {"ambient": "soft_wind"}
+        },
+        {
+          "id": "about_scene2",
+          "title": "Mission & Community Animation",
+          "durationSeconds": 8,
+          "elements": [
+            {"type": "ParticleSystem", "particles": ["userIcons"], "motion": "orbit_around_earth", "startDelay": 0.5},
+            {"type": "TextReveal", "text": "Citizen-science. Community-centric. Data-driven.", "animation": "slide_up", "startDelay": 1}
+          ],
+          "sound": {"tone": "soft_ping_loop"}
+        }
+      ]
+    },
+    {
+      "pageId": "movement",
+      "title": "The Movement",
+      "status": "Under Construction",
+      "scenes": [
+        {
+          "id": "movement_scene1",
+          "title": "Global Community Map",
+          "durationSeconds": 10,
+          "elements": [
+            {"type": "3DModel", "model": "mdl_world_map", "animation": "nodes_pop_in", "startDelay": 0},
+            {"type": "ParticleSystem", "particles": ["light_points"], "motion": "connect_nodes", "startDelay": 1}
+          ],
+          "interaction": {
+            "hoverMapNode": {"tooltip": "View citizen-science member", "scale":1.1}
+          },
+          "sound": {"ambient": "data_stream"}
+        },
+        {
+          "id": "movement_scene2",
+          "title": "Timeline of Impact",
+          "durationSeconds": 8,
+          "elements": [
+            {"type": "Timeline", "events": ["Launch beta","1000 users","First research publication"], "animation": "slide_left", "startDelay": 0.5}
+          ],
+          "sound": {"clicks": true}
+        }
+      ]
+    },
+    {
+      "pageId": "blog",
+      "title": "Blog & Insights",
+      "status": "Coming Soon",
+      "scenes": [
+        {
+          "id": "blog_scene1",
+          "title": "Article Grid Reveal",
+          "durationSeconds": 6,
+          "elements": [
+            {"type": "Grid", "items": ["ArticleCard1","ArticleCard2","ArticleCard3"], "animation": "masonryFadeIn", "startDelay": 0}
+          ],
+          "sound": {"ambient": "paper_flip"}
+        },
+        {
+          "id": "blog_scene2",
+          "title": "Read More Button Animation",
+          "durationSeconds": 4,
+          "elements": [
+            {"type": "Button", "id": "btn_read_more", "text": "Read More", "animation": "hoverGrow", "loop": false}
+          ],
+          "sound": {"hoverSound": true}
+        }
+      ]
+    },
+    {
+      "pageId": "privacy",
+      "title": "Privacy Policy",
+      "status": "Published",
+      "layout": {
+        "type": "scrollPage",
+        "animation": "fadeScroll",
+        "elements": [
+          {"type": "TextSection", "heading": "Privacy Policy", "content": "Legal text here …", "animation": "fadeInSection", "delayBetweenSections": 0.3}
+        ]
+      }
+    }
+  ],
+  "responsive": {
+    "breakpoints": {
+      "desktop": {"minWidth": 1200, "layout": "multi-panel"},
+      "tablet": {"minWidth": 768, "layout": "dual-panel"},
+      "mobile": {"maxWidth": 767, "layout": "single-column"}
+    },
+    "particleDensity": {
+      "desktop": 1.0,
+      "tablet": 0.7,
+      "mobile": 0.4
+    }
+  },
+  "animationSettings": {
+    "easings": {
+      "camera": "ease-in-out",
+      "bounce": "bounce",
+      "fade": "ease-out",
+      "slide": "ease-in",
+      "pulse": "loop"
+    },
+    "durations": {
+      "intro": 6,
+      "panelTransition": 8,
+      "ctaPulse": 1.8,
+      "tooltipFadeIn": 0.5
+    }
+  },
+  "developerNotes": {
+    "exportFormat": "WebGL/Three.js",
+    "framework": "Next.js",
+    "loading": {"type": "leaf_spinner", "animation": "rotate", "until": "first_scene_loaded"},
+    "accessibility": {"ariaLabels": true, "keyboardFocus": true, "contrastWCAG": true},
+    "performance": {"mobileTargetFPS": 60, "reduceParticleCount": true}
+  }
+}
