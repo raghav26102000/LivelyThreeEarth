@@ -11,7 +11,7 @@ export default function Home() {
         <color attach="background" args={["#F5F5F5"]} />
         <fog attach="fog" args={["#F5F5F5", 10, 25]} />
         <Suspense fallback={null}>
-          <ScrollControls pages={5} damping={0.2}>
+          <ScrollControls pages={8} damping={0.2}>
             <Scene />
             <Scroll html style={{ width: "100%", height: "100%" }}>
               <Overlay />
