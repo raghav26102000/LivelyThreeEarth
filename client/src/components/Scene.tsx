@@ -1,8 +1,13 @@
 import { useScroll } from "@react-three/drei";
 import { useRef, useMemo } from "react";
 import * as THREE from "three";
-import { useThree, useFrame } from "@react-three/fiber";
+import { useThree, useFrame, useLoader } from "@react-three/fiber";
 
+const noise3D = (x: number, y: number, z: number) => {
+    return (Math.sin(x * 100) + Math.cos(y * 100) + Math.sin(z * 100) + 3) / 6; 
+};
+
+// --- PlantParticles Component ---
 function PlantParticles() {
   const count = 200;
   const mesh = useRef<THREE.InstancedMesh>(null!);
@@ -63,131 +68,130 @@ function PlantParticles() {
   );
 }
 
-// Create a proper leaf shape using a custom geometry
-function LeafShape() {
-  const shape = useMemo(() => {
-    const leafShape = new THREE.Shape();
+// --- Butterflies Component ---
+function SingleButterfly({ orbitSpeed, zOffset, parentRef }: { orbitSpeed: number, zOffset: number, parentRef: React.RefObject<THREE.Group> }) {
+    const ref = useRef<THREE.Mesh>(null);
     
-    // Create a realistic leaf shape
-    leafShape.moveTo(0, 0);
-    leafShape.quadraticCurveTo(0.15, 0.3, 0.1, 0.6);
-    leafShape.quadraticCurveTo(0.05, 0.8, 0, 1);
-    leafShape.quadraticCurveTo(-0.05, 0.8, -0.1, 0.6);
-    leafShape.quadraticCurveTo(-0.15, 0.3, 0, 0);
-    
-    const extrudeSettings = {
-      depth: 0.02,
-      bevelEnabled: true,
-      bevelThickness: 0.01,
-      bevelSize: 0.01,
-      bevelSegments: 2
-    };
-    
-    return new THREE.ExtrudeGeometry(leafShape, extrudeSettings);
-  }, []);
-  
-  return <primitive object={shape} />;
+    // Create a simple butterfly texture using canvas
+    const texture = useMemo(() => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 128;
+        canvas.height = 128;
+        const ctx = canvas.getContext('2d')!;
+        
+        // Draw butterfly shape
+        ctx.fillStyle = '#FFD700';
+        ctx.beginPath();
+        ctx.ellipse(44, 64, 20, 30, 0, 0, Math.PI * 2);
+        ctx.ellipse(84, 64, 20, 30, 0, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Body
+        ctx.fillStyle = '#FFA500';
+        ctx.fillRect(60, 40, 8, 48);
+        
+        return new THREE.CanvasTexture(canvas);
+    }, []);
+
+    useFrame((state) => {
+        const t = state.clock.getElapsedTime();
+        if (ref.current && parentRef.current) {
+            const radius = 3.5 + zOffset;
+            const localX = Math.sin(t * orbitSpeed) * radius;
+            const localZ = Math.cos(t * orbitSpeed) * radius;
+            const localY = Math.sin(t * (orbitSpeed * 2)) * 1.5;
+            
+            // Convert to parent's local space
+            ref.current.position.set(localX, localY, localZ);
+            ref.current.rotation.y = -t * orbitSpeed - Math.PI / 2;
+        }
+    });
+
+    return (
+        <mesh ref={ref}>
+            <planeGeometry args={[0.3, 0.3]} /> 
+            <meshBasicMaterial map={texture} transparent side={THREE.DoubleSide} alphaTest={0.5} />
+        </mesh>
+    );
 }
 
+const butterflyConfigs = [
+    { speed: 1.5, offset: 0 },
+    { speed: 0.8, offset: 1.2 }, 
+    { speed: 2.2, offset: 0.5 }, 
+    { speed: 1.1, offset: -0.8 }, 
+];
+
+// --- NEW GLOBE Component (Integrated with scroll animations) ---
 function Globe({ position }: { position: [number, number, number] }) {
   const group = useRef<THREE.Group>(null!);
+  const earthRef = useRef<THREE.Mesh>(null);
   const scroll = useScroll();
-  const leafMeshes = useRef<THREE.InstancedMesh>(null!);
   const dummy = useMemo(() => new THREE.Object3D(), []);
 
-  const leafData = useMemo(() => {
-    const temp = [];
-    const leafCount = 80; // Reduced for better performance and less clutter
-    for (let i = 0; i < leafCount; i++) {
-      const phi = Math.acos(-1 + (2 * i) / leafCount);
-      const theta = Math.sqrt(leafCount * Math.PI) * phi;
-      
-      temp.push({
-        phi,
-        theta,
-        scale: 0.6 + Math.random() * 0.5,
-        offset: Math.random() * Math.PI * 2,
-        rotationOffset: Math.random() * Math.PI
-      });
+  // Load textures with error handling
+  const [colorMap, displacementMap] = useMemo(() => {
+    try {
+      return [
+        new THREE.TextureLoader().load('/textures/earth-moss.png'),
+        new THREE.TextureLoader().load('/textures/earth_displacement.png')
+      ];
+    } catch {
+      // Return null if textures fail to load
+      return [null, null];
     }
-    return temp;
   }, []);
 
   useFrame((state) => {
     const scrollPos = scroll.offset;
     
-    group.current.rotation.y += 0.003;
-    
+    // Existing scroll transitions
     if (scrollPos < 0.4) {
-       const enter = scroll.curve(1/5, 1/5);
-       group.current.scale.setScalar(enter * 1.5);
-       group.current.position.x = -3 + (1-enter) * -5;
+        const enter = scroll.curve(1/5, 1/5);
+        group.current.scale.setScalar(enter * 1.5);
+        group.current.position.x = -3 + (1-enter) * -5;
     } else if (scrollPos > 0.6 && scrollPos < 0.8) {
-       const enter = scroll.curve(3/5, 1/5);
-       group.current.scale.setScalar(1.5 + enter * 1.5);
-       group.current.position.x = -3 + (enter * 3);
+        const enter = scroll.curve(3/5, 1/5);
+        group.current.scale.setScalar(1.5 + enter * 1.5);
+        group.current.position.x = -3 + (enter * 3);
     }
 
-    leafData.forEach((leaf, i) => {
-      const time = state.clock.elapsedTime * 0.3;
-      const wave = Math.sin(time + leaf.offset) * 0.08;
-      const radius = 1.25 + wave;
-      
-      const x = radius * Math.sin(leaf.phi) * Math.cos(leaf.theta);
-      const y = radius * Math.sin(leaf.phi) * Math.sin(leaf.theta);
-      const z = radius * Math.cos(leaf.phi);
-      
-      dummy.position.set(x, y, z);
-      
-      // Make leaves point outward from center
-      dummy.lookAt(x * 2, y * 2, z * 2);
-      dummy.rotateZ(leaf.rotationOffset);
-      
-      dummy.scale.set(leaf.scale * 0.2, leaf.scale * 0.2, leaf.scale * 0.2);
-      dummy.updateMatrix();
-      
-      leafMeshes.current.setMatrixAt(i, dummy.matrix);
-    });
-    leafMeshes.current.instanceMatrix.needsUpdate = true;
+    // Rotate the earth
+    if (earthRef.current) {
+      earthRef.current.rotation.y += 0.003;
+    }
   });
 
   return (
     <group ref={group} position={position}>
-      {/* Main Earth sphere */}
-      <mesh>
-        <sphereGeometry args={[1.15, 64, 64]} />
-        <meshStandardMaterial 
-          color="#0A1F17" 
-          roughness={0.7} 
+      {/* Main Earth with texture */}
+      <mesh ref={earthRef} scale={1.0}>
+        <sphereGeometry args={[1, 128, 128]} /> 
+        <meshStandardMaterial
+          map={colorMap}
+          displacementMap={displacementMap}
+          displacementScale={0.2}
+          roughness={0.8}
           metalness={0.1}
+          color="#ffffff"
         />
       </mesh>
-      
-      {/* Green continents layer */}
-      <mesh>
-        <sphereGeometry args={[1.16, 64, 64]} />
-        <meshStandardMaterial 
-          color="#1D4D32" 
-          roughness={0.9}
-          transparent
-          opacity={0.85}
-        />
-      </mesh>
-      
-      {/* Leaves - using custom leaf geometry */}
-      <instancedMesh ref={leafMeshes} args={[undefined, undefined, 80]}>
-        <LeafShape />
-        <meshStandardMaterial 
-          color="#6FB583" 
-          side={THREE.DoubleSide}
-          roughness={0.6}
-          metalness={0.1}
-        />
-      </instancedMesh>
+
+      {/* Butterflies orbiting the globe */}
+      <group rotation={[0, 0, 0.2]} scale={0.4}>
+        {butterflyConfigs.map((config, index) => (
+          <SingleButterfly 
+            key={index} 
+            orbitSpeed={config.speed} 
+            zOffset={config.offset}
+            parentRef={group}
+          />
+        ))}
+      </group>
       
       {/* Subtle atmosphere glow */}
       <mesh>
-        <sphereGeometry args={[1.5, 32, 32]} />
+        <sphereGeometry args={[1.3, 32, 32]} />
         <meshBasicMaterial 
           color="#A2D39C" 
           transparent 
@@ -199,6 +203,7 @@ function Globe({ position }: { position: [number, number, number] }) {
   );
 }
 
+// --- Smartphone Component ---
 function Smartphone() {
   const group = useRef<THREE.Group>(null!);
   const scroll = useScroll();
@@ -215,7 +220,6 @@ function Smartphone() {
 
   return (
     <group ref={group} position={[2.5, 0, 0]}>
-      {/* Phone body with rounded corners simulation */}
       <mesh position={[0, 0, 0]} castShadow>
         <boxGeometry args={[1.4, 2.9, 0.15]} />
         <meshStandardMaterial 
@@ -225,13 +229,11 @@ function Smartphone() {
         />
       </mesh>
       
-      {/* Slight bezel */}
       <mesh position={[0, 0, 0.076]}>
         <planeGeometry args={[1.42, 2.92]} />
         <meshStandardMaterial color="#050A08" />
       </mesh>
       
-      {/* Screen background */}
       <mesh position={[0, 0, 0.08]}>
         <planeGeometry args={[1.3, 2.7]} />
         <meshStandardMaterial 
@@ -241,19 +243,16 @@ function Smartphone() {
         />
       </mesh>
       
-      {/* Status bar */}
       <mesh position={[0, 1.25, 0.081]}>
         <planeGeometry args={[1.2, 0.15]} />
         <meshBasicMaterial color="#E8F5E9" />
       </mesh>
       
-      {/* App header with gradient effect */}
       <mesh position={[0, 1.0, 0.082]}>
         <planeGeometry args={[1.2, 0.35]} />
         <meshBasicMaterial color="#81C784" />
       </mesh>
       
-      {/* Plant tracking cards - cleaner design */}
       {[
         { pos: [-0.3, 0.45, 0.083], color: "#4CAF50", icon: "leaf" },
         { pos: [0.3, 0.45, 0.083], color: "#66BB6A", icon: "sprout" },
@@ -261,25 +260,21 @@ function Smartphone() {
         { pos: [0.3, -0.15, 0.083], color: "#388E3C", icon: "flower" }
       ].map((card, idx) => (
         <group key={idx} position={card.pos as [number, number, number]}>
-          {/* Card background */}
           <mesh>
             <planeGeometry args={[0.5, 0.5]} />
             <meshBasicMaterial color="#FFFFFF" />
           </mesh>
           
-          {/* Card border */}
           <mesh position={[0, 0, -0.001]}>
             <planeGeometry args={[0.52, 0.52]} />
             <meshBasicMaterial color="#E0E0E0" />
           </mesh>
           
-          {/* Icon circle background */}
           <mesh position={[0, 0.08, 0.001]}>
             <circleGeometry args={[0.12, 32]} />
             <meshBasicMaterial color={card.color} />
           </mesh>
           
-          {/* Simple plant icon representation */}
           {card.icon === "leaf" && (
             <>
               <mesh position={[-0.02, 0.08, 0.002]} rotation={[0, 0, 0.3]}>
@@ -345,7 +340,6 @@ function Smartphone() {
             </>
           )}
           
-          {/* Card text lines */}
           <mesh position={[0, -0.05, 0.001]}>
             <planeGeometry args={[0.35, 0.03]} />
             <meshBasicMaterial color="#333333" />
@@ -357,13 +351,11 @@ function Smartphone() {
         </group>
       ))}
       
-      {/* Bottom action button */}
       <mesh position={[0, -0.85, 0.082]}>
         <planeGeometry args={[1.0, 0.3]} />
         <meshBasicMaterial color="#4CAF50" />
       </mesh>
       
-      {/* Navigation dots */}
       <group position={[0, -1.15, 0.082]}>
         {[-0.15, -0.05, 0.05, 0.15].map((x, i) => (
           <mesh key={i} position={[x, 0, 0]}>
@@ -375,7 +367,6 @@ function Smartphone() {
         ))}
       </group>
       
-      {/* Camera notch */}
       <mesh position={[0, 1.38, 0.08]}>
         <circleGeometry args={[0.03, 16]} />
         <meshBasicMaterial color="#000000" />
@@ -384,6 +375,7 @@ function Smartphone() {
   );
 }
 
+// --- Scene Component (Main Export) ---
 export default function Scene() {
   return (
     <>

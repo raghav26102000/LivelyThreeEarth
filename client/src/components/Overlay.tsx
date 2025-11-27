@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowDown, Check, Mail, Users, Leaf, Heart, TrendingUp, Shield, Sparkles, Target, Award, Globe2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import PhoneShowcase from "@/components/PhoneShowcase";
 
 const Section = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
   <section className={`min-h-screen w-full py-16 px-8 md:px-20 max-w-screen-2xl mx-auto flex flex-col justify-center ${className}`}>
@@ -13,12 +14,13 @@ export default function EnhancedLanding() {
   return (
     <div className="w-full min-h-full font-sans text-brand-dark bg-gradient-to-b from-white via-brand-light/20 to-white overflow-x-hidden">
       {/* Scene 1: Hero Intro */}
-      <Section>
+      <Section className="relative">
+        <PhoneShowcase className="absolute right-8 top-24 z-0" />
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-3xl"
+          className="max-w-3xl relative z-10"
         >
           <h1 className="font-display text-6xl md:text-8xl font-medium mb-6 text-brand-deep tracking-tight">
             The Lively Three
