@@ -197,7 +197,7 @@ function PhoneModel() {
   const group = useRef<any>();
   const [dataUrl, setDataUrl] = useState<string>("");
   
-  usePointerTilt(group);
+  usePointerTilt(group, 0.15); // Increased tilt for more dynamic feel
 
   useEffect(() => {
     const canvas = createScreenCanvas();
@@ -216,43 +216,73 @@ function PhoneModel() {
     if (texture) {
       texture.minFilter = THREE.LinearFilter;
       texture.magFilter = THREE.LinearFilter;
-      texture.anisotropy = 16; // Maximum anisotropic filtering
+      texture.anisotropy = 16;
       texture.needsUpdate = true;
       console.log("✅ Texture quality enhanced");
     }
   }, [texture]);
 
-  const screenW = 0.54;
-  const screenH = 1.07;
-  const phoneThickness = 0.04;
+  const screenW = 0.56;
+  const screenH = 1.18;
+  const phoneThickness = 0.09;
+  const phoneW = 0.64;
+  const phoneH = 1.28;
 
   return (
-    <group ref={group} position={[0, 0.02, 0]}>
-      {/* Phone body */}
-      <RoundedBox args={[0.62, 1.16, phoneThickness]} radius={0.06} smoothness={8} castShadow>
-        <meshStandardMaterial color="#0f1720" metalness={0.2} roughness={0.35} />
-      </RoundedBox>
-
-      {/* Bezel */}
-      <RoundedBox
-        args={[0.58, 1.11, phoneThickness - 0.005]}
-        radius={0.055}
-        smoothness={8}
-        position={[0, 0, phoneThickness / 2 + 0.001]}
+    <group ref={group} position={[0, 0, 0]} rotation={[0, 0.15, 0]}>
+      {/* Main phone body - darker with metallic finish */}
+      <RoundedBox 
+        args={[phoneW, phoneH, phoneThickness]} 
+        radius={0.08} 
+        smoothness={10} 
+        castShadow
+        receiveShadow
       >
-        <meshStandardMaterial color="#1f2937" metalness={0.3} roughness={0.4} />
+        <meshStandardMaterial 
+          color="#0a0e12" 
+          metalness={0.8} 
+          roughness={0.2}
+          envMapIntensity={1.5}
+        />
       </RoundedBox>
 
-      {/* Screen */}
-      <mesh position={[0, 0, phoneThickness / 2 + 0.02]} renderOrder={1000}>
+      {/* Side frame - metallic rim */}
+      <RoundedBox
+        args={[phoneW - 0.002, phoneH - 0.002, phoneThickness + 0.005]}
+        radius={0.078}
+        smoothness={10}
+        position={[0, 0, 0]}
+      >
+        <meshStandardMaterial 
+          color="#1a1f26" 
+          metalness={0.9} 
+          roughness={0.1}
+        />
+      </RoundedBox>
+
+      {/* SCREEN - NO BEZEL BLOCKING IT */}
+      <mesh position={[0, 0, phoneThickness / 2 + 0.01]} renderOrder={1000}>
         <planeGeometry args={[screenW, screenH]} />
-        <meshBasicMaterial map={texture} />
+        <meshBasicMaterial 
+          map={texture}
+          toneMapped={false}
+        />
       </mesh>
 
-      {/* Camera notch */}
-      <mesh position={[0, 0.51, phoneThickness / 2 + 0.025]} renderOrder={1001}>
-        <boxGeometry args={[0.12, 0.02, 0.004]} />
-        <meshStandardMaterial color="#0b1220" />
+      {/* Power button */}
+      <mesh position={[phoneW / 2 + 0.002, 0.2, 0]} rotation={[0, 0, Math.PI / 2]}>
+        <boxGeometry args={[0.08, 0.01, 0.02]} />
+        <meshStandardMaterial color="#1a1f26" metalness={0.9} roughness={0.2} />
+      </mesh>
+
+      {/* Volume buttons */}
+      <mesh position={[-phoneW / 2 - 0.002, 0.15, 0]} rotation={[0, 0, Math.PI / 2]}>
+        <boxGeometry args={[0.06, 0.01, 0.02]} />
+        <meshStandardMaterial color="#1a1f26" metalness={0.9} roughness={0.2} />
+      </mesh>
+      <mesh position={[-phoneW / 2 - 0.002, 0.05, 0]} rotation={[0, 0, Math.PI / 2]}>
+        <boxGeometry args={[0.06, 0.01, 0.02]} />
+        <meshStandardMaterial color="#1a1f26" metalness={0.9} roughness={0.2} />
       </mesh>
     </group>
   );
@@ -265,39 +295,65 @@ export default function PhoneShowcase({ screenUrl, className = "" }: PhoneShowca
         <Canvas
           shadows
           dpr={[2, 3]}
-          camera={{ position: [0, 0, 2.4], fov: 30 }}
+          camera={{ position: [0, 0, 2.8], fov: 28 }}
           style={{ pointerEvents: 'none' }}
           gl={{ 
             preserveDrawingBuffer: true, 
             antialias: true, 
-            alpha: false,
+            alpha: true,
             powerPreference: 'high-performance'
           }}
         >
-          <color attach="background" args={["#F5F5F5"]} />
-          <ambientLight intensity={1.5} />
-          <directionalLight position={[2, 5, 2]} intensity={1.0} castShadow />
-          <directionalLight position={[-3, -2, -2]} intensity={0.6} />
-          <directionalLight position={[0, 0, 5]} intensity={1.0} />
+          {/* Transparent background */}
+          <color attach="background" args={["#00000000"]} />
+          
+          {/* Enhanced lighting for realism */}
+          <ambientLight intensity={0.5} />
+          <directionalLight 
+            position={[5, 8, 5]} 
+            intensity={1.2} 
+            castShadow
+            shadow-mapSize={[2048, 2048]}
+            shadow-camera-left={-2}
+            shadow-camera-right={2}
+            shadow-camera-top={2}
+            shadow-camera-bottom={-2}
+          />
+          <directionalLight position={[-3, 3, -3]} intensity={0.5} />
+          <pointLight position={[0, 0, 4]} intensity={0.8} color="#ffffff" />
+          
+          {/* Rim light for depth */}
+          <spotLight 
+            position={[-2, 0, -2]} 
+            intensity={0.6} 
+            angle={0.5}
+            penumbra={0.5}
+            color="#4a90e2"
+          />
 
           <Suspense fallback={null}>
             <PhoneModel />
           </Suspense>
 
-          <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
+          <OrbitControls 
+            enableZoom={false} 
+            enablePan={false} 
+            enableRotate={false}
+          />
         </Canvas>
 
+        {/* Soft, realistic shadow - circular, not rectangular */}
         <div style={{
           position: "absolute",
           left: "50%",
-          transform: "translateX(-50%)",
-          bottom: -26,
-          width: 260,
-          height: 60,
-          borderRadius: 999,
-          filter: "blur(36px)",
-          background: "rgba(20,30,20,0.18)",
-          zIndex: 0,
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "100%",
+          height: "100%",
+          borderRadius: "50%",
+          filter: "blur(60px)",
+          background: "radial-gradient(ellipse 200px 250px at center, rgba(15,25,35,0.15) 0%, transparent 50%)",
+          zIndex: -1,
           pointerEvents: 'none'
         }} />
       </div>
