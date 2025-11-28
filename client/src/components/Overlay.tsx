@@ -23,7 +23,7 @@ export default function EnhancedLanding() {
           className="max-w-3xl relative z-10"
         >
           <h1 className="font-display text-6xl md:text-8xl font-medium mb-6 text-brand-deep tracking-tight">
-            The Lively Three
+            The Lively T{"h"}ree
           </h1>
           <p className="text-2xl md:text-3xl text-brand-deep/90 leading-relaxed max-w-2xl mb-4">
             Only 1 in 10 people hits their daily fiber target. Do you?
