@@ -5,67 +5,82 @@ import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/movement", label: "The Movement" },
-  { href: "/blog", label: "Blog" },
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/movement", label: "The Movement" },
+  { href: "/blog", label: "Blog" },
 ];
 
+// Define your logo's path
+const LOGO_PATH = "/logo.jpeg"; 
+const BRAND_NAME = "The Lively Three"; // Define the brand name
+
 export default function Navbar() {
-  const [location] = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
+  const [location] = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
 
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 p-6 pointer-events-none">
-      <div className="max-w-screen-2xl mx-auto flex justify-between items-center pointer-events-auto">
-        <Link href="/">
-          <a className="font-display text-2xl font-bold text-brand-deep tracking-tight hover:opacity-80 transition-opacity">
-            The Lively Three
-          </a>
-        </Link>
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 p-6 pointer-events-none">
+      <div className="max-w-screen-2xl mx-auto flex justify-between items-center pointer-events-auto">
+        <Link href="/">
+         {/* UPDATED: Logo and Text combined into a flex container */}
+          <a className="flex items-center space-x-3 p-1 rounded-lg transition-opacity hover:opacity-90">
+            {/* Logo Image - Adjusted size slightly for better alignment */}
+            <img 
+              src={LOGO_PATH} 
+              alt={`${BRAND_NAME} Logo`} 
+              className="w-10 h-10 object-contain rounded-lg shadow-md" // Added rounded-full and shadow
+            />
+            
+            {/* Brand Text - Preserved original text styling */}
+            <span className="font-display text-2xl font-bold text-brand-deep tracking-tight">
+              {BRAND_NAME}
+            </span>
+          </a>
+        </Link>
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex gap-8 bg-white/50 backdrop-blur-md px-8 py-3 rounded-full shadow-sm border border-brand-leaf/20">
-          {links.map((link) => (
-            <Link key={link.href} href={link.href}>
-              <a 
-                className={`text-sm font-medium transition-colors hover:text-brand-deep ${
-                  location === link.href ? "text-brand-deep" : "text-brand-dark/60"
-                }`}
-              >
-                {link.label}
-              </a>
-            </Link>
-          ))}
-        </div>
+        {/* Desktop Nav (Rest of the code remains the same) */}
+        <div className="hidden md:flex gap-8 bg-white/50 backdrop-blur-md px-8 py-3 rounded-full shadow-sm border border-brand-leaf/20">
+          {links.map((link) => (
+            <Link key={link.href} href={link.href}>
+              <a 
+                className={`text-sm font-medium transition-colors hover:text-brand-deep ${
+                  location === link.href ? "text-brand-deep" : "text-brand-dark/60"
+                }`}
+              >
+                {link.label}
+              </a>
+            </Link>
+          ))}
+        </div>
 
-        {/* Mobile Nav */}
-        <div className="md:hidden">
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <button className="p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm">
-                <Menu className="w-6 h-6 text-brand-deep" />
-              </button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] bg-brand-light border-l border-brand-leaf/20">
-              <div className="flex flex-col gap-8 mt-10">
-                {links.map((link) => (
-                  <Link key={link.href} href={link.href}>
-                    <a 
-                      onClick={() => setIsOpen(false)}
-                      className={`text-2xl font-display font-medium ${
-                        location === link.href ? "text-brand-deep" : "text-brand-dark/60"
-                      }`}
-                    >
-                      {link.label}
-                    </a>
-                  </Link>
-                ))}
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
-      </div>
-    </nav>
-  );
+        {/* Mobile Nav (I removed the redundant logo from the sheet content here) */}
+        <div className="md:hidden">
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <button className="p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm">
+                <Menu className="w-6 h-6 text-brand-deep" />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] bg-brand-light border-l border-brand-leaf/20">
+              <div className="flex flex-col gap-8 mt-10">
+                {links.map((link) => (
+                  <Link key={link.href} href={link.href}>
+                    <a 
+                      onClick={() => setIsOpen(false)}
+                      className={`text-2xl font-display font-medium ${
+                        location === link.href ? "text-brand-deep" : "text-brand-dark/60"
+                      }`}
+                    >
+                      {link.label}
+                    </a>
+                  </Link>
+                ))}
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </div>
+    </nav>
+  );
 }

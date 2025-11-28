@@ -204,176 +204,176 @@ function Globe({ position }: { position: [number, number, number] }) {
 }
 
 // --- Smartphone Component ---
-function Smartphone() {
-  const group = useRef<THREE.Group>(null!);
-  const scroll = useScroll();
+// function Smartphone() {
+//   const group = useRef<THREE.Group>(null!);
+//   const scroll = useScroll();
 
-  useFrame((state) => {
-    const visibility = scroll.curve(2/5, 1/5);
+//   useFrame((state) => {
+//     const visibility = scroll.curve(2/5, 1/5);
     
-    group.current.visible = visibility > 0.01;
-    group.current.scale.setScalar(visibility * 1.2);
+//     group.current.visible = visibility > 0.01;
+//     group.current.scale.setScalar(visibility * 1.2);
     
-    group.current.rotation.y = Math.sin(scroll.offset * Math.PI * 2) * 0.15;
-    group.current.rotation.x = -0.1;
-  });
+//     group.current.rotation.y = Math.sin(scroll.offset * Math.PI * 2) * 0.15;
+//     group.current.rotation.x = -0.1;
+//   });
 
-  return (
-    <group ref={group} position={[2.5, 0, 0]}>
-      <mesh position={[0, 0, 0]} castShadow>
-        <boxGeometry args={[1.4, 2.9, 0.15]} />
-        <meshStandardMaterial 
-          color="#0A1612" 
-          roughness={0.2} 
-          metalness={0.8}
-        />
-      </mesh>
+//   return (
+//     <group ref={group} position={[2.5, 0, 0]}>
+//       <mesh position={[0, 0, 0]} castShadow>
+//         <boxGeometry args={[1.4, 2.9, 0.15]} />
+//         <meshStandardMaterial 
+//           color="#0A1612" 
+//           roughness={0.2} 
+//           metalness={0.8}
+//         />
+//       </mesh>
       
-      <mesh position={[0, 0, 0.076]}>
-        <planeGeometry args={[1.42, 2.92]} />
-        <meshStandardMaterial color="#050A08" />
-      </mesh>
+//       <mesh position={[0, 0, 0.076]}>
+//         <planeGeometry args={[1.42, 2.92]} />
+//         <meshStandardMaterial color="#050A08" />
+//       </mesh>
       
-      <mesh position={[0, 0, 0.08]}>
-        <planeGeometry args={[1.3, 2.7]} />
-        <meshStandardMaterial 
-          color="#FAFFF8" 
-          emissive="#FAFFF8"
-          emissiveIntensity={0.2}
-        />
-      </mesh>
+//       <mesh position={[0, 0, 0.08]}>
+//         <planeGeometry args={[1.3, 2.7]} />
+//         <meshStandardMaterial 
+//           color="#FAFFF8" 
+//           emissive="#FAFFF8"
+//           emissiveIntensity={0.2}
+//         />
+//       </mesh>
       
-      <mesh position={[0, 1.25, 0.081]}>
-        <planeGeometry args={[1.2, 0.15]} />
-        <meshBasicMaterial color="#E8F5E9" />
-      </mesh>
+//       <mesh position={[0, 1.25, 0.081]}>
+//         <planeGeometry args={[1.2, 0.15]} />
+//         <meshBasicMaterial color="#E8F5E9" />
+//       </mesh>
       
-      <mesh position={[0, 1.0, 0.082]}>
-        <planeGeometry args={[1.2, 0.35]} />
-        <meshBasicMaterial color="#81C784" />
-      </mesh>
+//       <mesh position={[0, 1.0, 0.082]}>
+//         <planeGeometry args={[1.2, 0.35]} />
+//         <meshBasicMaterial color="#81C784" />
+//       </mesh>
       
-      {[
-        { pos: [-0.3, 0.45, 0.083], color: "#4CAF50", icon: "leaf" },
-        { pos: [0.3, 0.45, 0.083], color: "#66BB6A", icon: "sprout" },
-        { pos: [-0.3, -0.15, 0.083], color: "#43A047", icon: "tree" },
-        { pos: [0.3, -0.15, 0.083], color: "#388E3C", icon: "flower" }
-      ].map((card, idx) => (
-        <group key={idx} position={card.pos as [number, number, number]}>
-          <mesh>
-            <planeGeometry args={[0.5, 0.5]} />
-            <meshBasicMaterial color="#FFFFFF" />
-          </mesh>
+//       {[
+//         { pos: [-0.3, 0.45, 0.083], color: "#4CAF50", icon: "leaf" },
+//         { pos: [0.3, 0.45, 0.083], color: "#66BB6A", icon: "sprout" },
+//         { pos: [-0.3, -0.15, 0.083], color: "#43A047", icon: "tree" },
+//         { pos: [0.3, -0.15, 0.083], color: "#388E3C", icon: "flower" }
+//       ].map((card, idx) => (
+//         <group key={idx} position={card.pos as [number, number, number]}>
+//           <mesh>
+//             <planeGeometry args={[0.5, 0.5]} />
+//             <meshBasicMaterial color="#FFFFFF" />
+//           </mesh>
           
-          <mesh position={[0, 0, -0.001]}>
-            <planeGeometry args={[0.52, 0.52]} />
-            <meshBasicMaterial color="#E0E0E0" />
-          </mesh>
+//           <mesh position={[0, 0, -0.001]}>
+//             <planeGeometry args={[0.52, 0.52]} />
+//             <meshBasicMaterial color="#E0E0E0" />
+//           </mesh>
           
-          <mesh position={[0, 0.08, 0.001]}>
-            <circleGeometry args={[0.12, 32]} />
-            <meshBasicMaterial color={card.color} />
-          </mesh>
+//           <mesh position={[0, 0.08, 0.001]}>
+//             <circleGeometry args={[0.12, 32]} />
+//             <meshBasicMaterial color={card.color} />
+//           </mesh>
           
-          {card.icon === "leaf" && (
-            <>
-              <mesh position={[-0.02, 0.08, 0.002]} rotation={[0, 0, 0.3]}>
-                <planeGeometry args={[0.05, 0.08]} />
-                <meshBasicMaterial color="#FFFFFF" />
-              </mesh>
-              <mesh position={[0.01, 0.06, 0.002]}>
-                <boxGeometry args={[0.008, 0.06, 0.001]} />
-                <meshBasicMaterial color="#FFFFFF" />
-              </mesh>
-            </>
-          )}
+//           {card.icon === "leaf" && (
+//             <>
+//               <mesh position={[-0.02, 0.08, 0.002]} rotation={[0, 0, 0.3]}>
+//                 <planeGeometry args={[0.05, 0.08]} />
+//                 <meshBasicMaterial color="#FFFFFF" />
+//               </mesh>
+//               <mesh position={[0.01, 0.06, 0.002]}>
+//                 <boxGeometry args={[0.008, 0.06, 0.001]} />
+//                 <meshBasicMaterial color="#FFFFFF" />
+//               </mesh>
+//             </>
+//           )}
           
-          {card.icon === "sprout" && (
-            <>
-              <mesh position={[0, 0.05, 0.002]}>
-                <boxGeometry args={[0.01, 0.08, 0.001]} />
-                <meshBasicMaterial color="#FFFFFF" />
-              </mesh>
-              <mesh position={[-0.02, 0.1, 0.002]}>
-                <circleGeometry args={[0.02, 16]} />
-                <meshBasicMaterial color="#FFFFFF" />
-              </mesh>
-              <mesh position={[0.02, 0.1, 0.002]}>
-                <circleGeometry args={[0.02, 16]} />
-                <meshBasicMaterial color="#FFFFFF" />
-              </mesh>
-            </>
-          )}
+//           {card.icon === "sprout" && (
+//             <>
+//               <mesh position={[0, 0.05, 0.002]}>
+//                 <boxGeometry args={[0.01, 0.08, 0.001]} />
+//                 <meshBasicMaterial color="#FFFFFF" />
+//               </mesh>
+//               <mesh position={[-0.02, 0.1, 0.002]}>
+//                 <circleGeometry args={[0.02, 16]} />
+//                 <meshBasicMaterial color="#FFFFFF" />
+//               </mesh>
+//               <mesh position={[0.02, 0.1, 0.002]}>
+//                 <circleGeometry args={[0.02, 16]} />
+//                 <meshBasicMaterial color="#FFFFFF" />
+//               </mesh>
+//             </>
+//           )}
           
-          {card.icon === "tree" && (
-            <>
-              <mesh position={[0, 0.05, 0.002]}>
-                <boxGeometry args={[0.015, 0.06, 0.001]} />
-                <meshBasicMaterial color="#FFFFFF" />
-              </mesh>
-              <mesh position={[0, 0.1, 0.002]}>
-                <circleGeometry args={[0.04, 16]} />
-                <meshBasicMaterial color="#FFFFFF" />
-              </mesh>
-            </>
-          )}
+//           {card.icon === "tree" && (
+//             <>
+//               <mesh position={[0, 0.05, 0.002]}>
+//                 <boxGeometry args={[0.015, 0.06, 0.001]} />
+//                 <meshBasicMaterial color="#FFFFFF" />
+//               </mesh>
+//               <mesh position={[0, 0.1, 0.002]}>
+//                 <circleGeometry args={[0.04, 16]} />
+//                 <meshBasicMaterial color="#FFFFFF" />
+//               </mesh>
+//             </>
+//           )}
           
-          {card.icon === "flower" && (
-            <>
-              <mesh position={[0, 0.08, 0.002]}>
-                <circleGeometry args={[0.015, 16]} />
-                <meshBasicMaterial color="#FFFFFF" />
-              </mesh>
-              {[0, 1, 2, 3, 4, 5].map((i) => (
-                <mesh 
-                  key={i}
-                  position={[
-                    Math.cos((i / 6) * Math.PI * 2) * 0.025,
-                    0.08 + Math.sin((i / 6) * Math.PI * 2) * 0.025,
-                    0.003
-                  ]}
-                >
-                  <circleGeometry args={[0.012, 12]} />
-                  <meshBasicMaterial color="#FFFFFF" />
-                </mesh>
-              ))}
-            </>
-          )}
+//           {card.icon === "flower" && (
+//             <>
+//               <mesh position={[0, 0.08, 0.002]}>
+//                 <circleGeometry args={[0.015, 16]} />
+//                 <meshBasicMaterial color="#FFFFFF" />
+//               </mesh>
+//               {[0, 1, 2, 3, 4, 5].map((i) => (
+//                 <mesh 
+//                   key={i}
+//                   position={[
+//                     Math.cos((i / 6) * Math.PI * 2) * 0.025,
+//                     0.08 + Math.sin((i / 6) * Math.PI * 2) * 0.025,
+//                     0.003
+//                   ]}
+//                 >
+//                   <circleGeometry args={[0.012, 12]} />
+//                   <meshBasicMaterial color="#FFFFFF" />
+//                 </mesh>
+//               ))}
+//             </>
+//           )}
           
-          <mesh position={[0, -0.05, 0.001]}>
-            <planeGeometry args={[0.35, 0.03]} />
-            <meshBasicMaterial color="#333333" />
-          </mesh>
-          <mesh position={[0, -0.12, 0.001]}>
-            <planeGeometry args={[0.25, 0.02]} />
-            <meshBasicMaterial color="#999999" />
-          </mesh>
-        </group>
-      ))}
+//           <mesh position={[0, -0.05, 0.001]}>
+//             <planeGeometry args={[0.35, 0.03]} />
+//             <meshBasicMaterial color="#333333" />
+//           </mesh>
+//           <mesh position={[0, -0.12, 0.001]}>
+//             <planeGeometry args={[0.25, 0.02]} />
+//             <meshBasicMaterial color="#999999" />
+//           </mesh>
+//         </group>
+//       ))}
       
-      <mesh position={[0, -0.85, 0.082]}>
-        <planeGeometry args={[1.0, 0.3]} />
-        <meshBasicMaterial color="#4CAF50" />
-      </mesh>
+//       <mesh position={[0, -0.85, 0.082]}>
+//         <planeGeometry args={[1.0, 0.3]} />
+//         <meshBasicMaterial color="#4CAF50" />
+//       </mesh>
       
-      <group position={[0, -1.15, 0.082]}>
-        {[-0.15, -0.05, 0.05, 0.15].map((x, i) => (
-          <mesh key={i} position={[x, 0, 0]}>
-            <circleGeometry args={[0.02, 16]} />
-            <meshBasicMaterial 
-              color={i === 0 ? "#4CAF50" : "#CCCCCC"} 
-            />
-          </mesh>
-        ))}
-      </group>
+//       <group position={[0, -1.15, 0.082]}>
+//         {[-0.15, -0.05, 0.05, 0.15].map((x, i) => (
+//           <mesh key={i} position={[x, 0, 0]}>
+//             <circleGeometry args={[0.02, 16]} />
+//             <meshBasicMaterial 
+//               color={i === 0 ? "#4CAF50" : "#CCCCCC"} 
+//             />
+//           </mesh>
+//         ))}
+//       </group>
       
-      <mesh position={[0, 1.38, 0.08]}>
-        <circleGeometry args={[0.03, 16]} />
-        <meshBasicMaterial color="#000000" />
-      </mesh>
-    </group>
-  );
-}
+//       <mesh position={[0, 1.38, 0.08]}>
+//         <circleGeometry args={[0.03, 16]} />
+//         <meshBasicMaterial color="#000000" />
+//       </mesh>
+//     </group>
+//   );
+// }
 
 // --- Scene Component (Main Export) ---
 export default function Scene() {
@@ -386,7 +386,7 @@ export default function Scene() {
 
       <PlantParticles />
       <Globe position={[-3, 0, 0]} />
-      <Smartphone />
+      
     </>
   );
 }
