@@ -1,16 +1,16 @@
 import { motion } from "framer-motion";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Points, PointMaterial, Float, OrbitControls, Box } from "@react-three/drei";
+import { Points, PointMaterial, OrbitControls } from "@react-three/drei";
 import { Suspense, useRef, useState, useMemo } from "react";
 import * as random from "maath/random/dist/maath-random.esm";
-// FIX: Import THREE for blending constants
 import * as THREE from 'three'; 
 
-// --- PersonalizedDataHelix Component ---
+// --- PersonalizedDataHelix Component (Updated with Typescript Fix) ---
 function PersonalizedDataHelix() {
-  const helixRef = useRef();
-  const ringRef = useRef();
-  const pointLightRef = useRef();
+  // FIX: Explicitly type the refs for TypeScript compatibility
+  const helixRef = useRef<THREE.Points>(null);
+  const ringRef = useRef<THREE.Points>(null);
+  const pointLightRef = useRef<THREE.PointLight>(null);
 
   // 1. Central Helix Data: Create points for the helix path
   const helixPoints = useMemo(() => {
@@ -20,7 +20,7 @@ function PersonalizedDataHelix() {
     const height = 3;
     
     for (let i = 0; i < numPoints; i++) {
-      const angle = i * 0.5; // Adjust for tighter/looser spiral
+      const angle = i * 0.5; 
       const x = radius * Math.cos(angle);
       const z = radius * Math.sin(angle);
       const y = (i / numPoints) * height - (height / 2);
@@ -30,20 +30,24 @@ function PersonalizedDataHelix() {
   }, []);
 
   // 2. Outer Ring Data: Create points distributed in a wide circle/sphere
-  const [ringPoints] = useState(() => random.inSphere(new Float32Array(3000), { radius: 3 }));
+  // Increased point count and radius for a denser cloud
+  const [ringPoints] = useState(() => random.inSphere(new Float32Array(4000), { radius: 3.5 }));
   
   // Animation loop
   useFrame((state, delta) => {
-    // Animate the main helix rotation (slow, steady, structural)
-    helixRef.current.rotation.y += delta * 0.3;
-    
-    // Animate the outer ring rotation (fast, dynamic, complex data flow)
-    ringRef.current.rotation.x += delta * 0.5;
-    ringRef.current.rotation.y -= delta * 0.4;
+    // Rotation animation
+    if (helixRef.current) helixRef.current.rotation.y += delta * 0.3;
+    if (ringRef.current) {
+      ringRef.current.rotation.x += delta * 0.5;
+      ringRef.current.rotation.y -= delta * 0.4;
+    }
 
-    // Animate the central light's intensity (pulsing personalization)
-    const time = state.clock.getElapsedTime();
-    pointLightRef.current.intensity = 2 + Math.sin(time * 2) * 1.5;
+    // Central light pulsing animation
+    if (pointLightRef.current) {
+      const time = state.clock.getElapsedTime();
+      // Increased base intensity and pulse range
+      pointLightRef.current.intensity = 3 + Math.sin(time * 2) * 2; 
+    }
   });
 
   return (
@@ -52,19 +56,20 @@ function PersonalizedDataHelix() {
       <pointLight 
         ref={pointLightRef} 
         position={[0, 0, 0]} 
-        color="#FBC02D" // Gold/Yellow for intelligence/insights
-        distance={5}
+        color="#FFD700" // Brighter Gold
+        distance={10} // Increased light range
       />
       
       {/* 1. Central Helix (Data/DNA Structure) */}
       <Points ref={helixRef} positions={helixPoints} stride={3} frustumCulled>
         <PointMaterial
           transparent
-          color="#1E88E5" // Blue for Data/Technology
-          size={0.08}
+          color="#00E5FF" // Vivid Cyan
+          size={0.15} // Much larger point size
           sizeAttenuation={true}
           depthWrite={false}
-          blending={THREE.AdditiveBlending}
+          // blending={THREE.AdditiveBlending}
+          opacity={0.9}
         />
       </Points>
 
@@ -72,15 +77,16 @@ function PersonalizedDataHelix() {
       <Points ref={ringRef} positions={ringPoints} stride={3} frustumCulled>
         <PointMaterial
           transparent
-          color="#4CAF50" // Green for Nutrition/Health
-          size={0.03}
+          color="#66FF66" // Bright vibrant Green
+          size={0.08} // Larger point size
           sizeAttenuation={true}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
+          opacity={0.7}
         />
       </Points>
       
-      {/* Optional: Add orbit controls for user interaction (great for engagement) */}
+      {/* Optional: Orbit controls for auto-rotation and interaction */}
       <OrbitControls 
         enableZoom={false} 
         autoRotate={true} 
@@ -94,11 +100,12 @@ function PersonalizedDataHelix() {
 }
 // --- End PersonalizedDataHelix Component ---
 
-
+// --- About Component (Updated with Enhanced Typography) ---
 export default function About() {
   return (
     <div className="w-full min-h-screen bg-brand-light pt-24 px-6">
-      <div className="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center h-[80vh]">
+      {/* Increased height to h-[90vh] for more vertical space */}
+      <div className="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center h-[90vh]"> 
         {/* Text Content */}
         <div className="space-y-8 z-10">
           <motion.div
@@ -106,10 +113,12 @@ export default function About() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h4 className="text-brand-leaf font-bold tracking-wider uppercase text-sm mb-4">
+            {/* Section heading */}
+            <h4 className="text-brand-leaf font-bold tracking-wider uppercase text-xl md:text-2xl mb-6"> 
               Our Vision
             </h4>
-            <h1 className="font-display text-5xl md:text-7xl text-brand-deep leading-tight">
+            {/* Main headline - similar size to section heading */}
+            <h1 className="font-display text-3xl md:text-4xl lg:text-5xl text-brand-deep leading-tight mb-6"> 
               One simple app for smarter fibre, protein, and micronutrients.
             </h1>
           </motion.div>
@@ -118,16 +127,15 @@ export default function About() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-xl text-brand-dark/70 max-w-lg"
+            className="text-base md:text-lg text-brand-dark max-w-xl leading-relaxed" 
           >
-            **Citizen-science. Community-centric. Data-driven.** We are building a future where nutrition is intuitive and personalized.
+            <span className="font-semibold text-brand-leaf">Citizen-science. Community-centric. Data-driven.</span> We are building a future where nutrition is intuitive and personalized.
           </motion.p>
         </div>
 
         {/* 3D Visualization */}
-        <div className="h-[500px] w-full relative">
-          <Canvas camera={{ position: [0, 0, 5] }}>
-            {/* Ambient light for subtle scene lighting */}
+        <div className="h-[400px] w-full relative">
+          <Canvas camera={{ position: [0, 0, 6.5] }}>
             <ambientLight intensity={0.5} /> 
             <Suspense fallback={null}>
               <PersonalizedDataHelix />
@@ -138,4 +146,3 @@ export default function About() {
     </div>
   );
 }
-

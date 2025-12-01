@@ -143,8 +143,7 @@ export default function PhoneShowcase({ screenUrl, className = "" }: PhoneShowca
             powerPreference: 'high-performance'
           }}
         >
-          {/* Transparent background */}
-          <color attach="background" args={["#00000000"]} />
+         
           
           {/* Enhanced lighting for realism */}
           <ambientLight intensity={0.5} />

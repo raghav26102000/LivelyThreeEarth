@@ -146,15 +146,19 @@ function Globe({ position }: { position: [number, number, number] }) {
     const scrollPos = scroll.offset;
     
     // Existing scroll transitions
-    if (scrollPos < 0.4) {
-        const enter = scroll.curve(1/5, 1/5);
-        group.current.scale.setScalar(enter * 1.5);
-        group.current.position.x = -3 + (1-enter) * -5;
-    } else if (scrollPos > 0.6 && scrollPos < 0.8) {
-        const enter = scroll.curve(3/5, 1/5);
-        group.current.scale.setScalar(1.5 + enter * 1.5);
-        group.current.position.x = -3 + (enter * 3);
-    }
+     if (scrollPos < 0.3) {
+      const enter = scroll.curve(0.05, 0.15);
+      group.current.scale.setScalar(enter * 1.5);
+      group.current.position.x = -3 + (1-enter) * -5;
+  } else if (scrollPos > 0.4 && scrollPos < 0.6) {
+      const enter = scroll.curve(0.4, 0.15);
+      group.current.scale.setScalar(1.5 + enter * 1.5);
+      group.current.position.x = -3 + (enter * 3);
+  } else if (scrollPos >= 0.6) {
+      // Keep globe visible but out of the way for remaining sections
+      group.current.scale.setScalar(3);
+      group.current.position.x = 0;
+  }
 
     // Rotate the earth
     if (earthRef.current) {
