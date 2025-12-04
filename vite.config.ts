@@ -40,7 +40,14 @@ export default defineConfig({
   },
   server: {
     host: "0.0.0.0",
-    allowedHosts: true,
+    port: 8000,
+    strictPort: true,
+    hmr: {
+      protocol: "ws",
+      host: "localhost",
+      port: 8000,
+      overlay: false,
+    },
     fs: {
       strict: true,
       deny: ["**/.*"],

@@ -43,9 +43,9 @@ export default function EnhancedLanding() {
           transition={{ duration: 0.8 }}
           className="max-w-3xl relative z-10"
         >
-          <h1 className="font-display text-6xl md:text-8xl font-medium mb-6 text-brand-deep tracking-tight">
-            The Lively T{"h"}ree
-          </h1>
+          <h2 className="font-display text-6xl md:text-8xl font-medium mb-6 text-brand-deep tracking-tight">
+            The Lively T{"{h}"}ree
+          </h2>
           <p className="text-2xl md:text-3xl text-brand-deep/90 leading-relaxed max-w-2xl mb-4">
             Only 1 in 10 people hits their daily fiber target. Do you?
           </p>
@@ -525,13 +525,14 @@ export default function EnhancedLanding() {
             </p>
           </div>
         </motion.div>
-
+        <footer className="mt-16 text-sm text-brand-dark/40 font-medium">
+    <p className="mb-2">© 2025 The Lively Three. All rights reserved.</p>
+    <p className="text-xs">Powered by Beeqster GmbH • info@beeqster.com</p>
+  </footer>
        
       </Section>
 
-      <footer className="w-full text-center text-sm text-brand-dark/40 font-medium py-8 mt-4">
-        <p className="mb-2">© 2025 The Lively Three. All rights reserved.</p>
-      </footer>
+      
     </div>
   );
 }

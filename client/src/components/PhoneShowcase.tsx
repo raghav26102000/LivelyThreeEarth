@@ -9,9 +9,10 @@ import * as THREE from "three";
 
 const screenUrls = [
   "/00 - Onboarding.png", 
-  "/00 - Suggestion.png",
-  "/personalization.png", 
-  "/Micronutrient Map.png", 
+  "/05 - Questionnaire.png",
+  "/Health Score.png", 
+  "/plants add.png",
+  "/Spider Chart.png",  
 ];
 
 type PhoneShowcaseProps = {
@@ -43,10 +44,10 @@ function PhoneModel({ screenUrls }: { screenUrls: string[] }) {
 
   // --- Screen Cycling Logic ---
   useEffect(() => {
-    // Cycle to the next screen every 5000ms (5 seconds)
+    // Cycle to the next screen every 6000ms (6 seconds)
     const intervalId = setInterval(() => {
       setCurrentScreenIndex((prevIndex) => (prevIndex + 1) % screenUrls.length);
-    }, 5000);
+    }, 6000);
 
     // Cleanup the interval when the component unmounts
     return () => clearInterval(intervalId);

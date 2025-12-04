@@ -79,7 +79,7 @@ export default async function runApp(
   // Other ports are firewalled. Default to 5000 if not specified.
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT || 8000;
 app.listen(PORT, 'localhost', () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

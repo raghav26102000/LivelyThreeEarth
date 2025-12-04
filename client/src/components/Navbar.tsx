@@ -13,7 +13,7 @@ const links = [
 
 // Define your logo's path
 const LOGO_PATH = "/logo.jpeg"; 
-const BRAND_NAME = "The Lively Three"; 
+const BRAND_NAME = "The Lively T{h}ree";
 
 export default function Navbar() {
   const [location] = useLocation();

@@ -9,8 +9,9 @@ import About from "@/pages/About";
 import Movement from "@/pages/Movement";
 import Blog from "@/pages/Blog";
 import Privacy from "@/pages/Privacy";
-import Globe from "@/pages/globe";
+
 import Navbar from "@/components/Navbar";
+import CookieConsent from "@/components/CookieConsent"; 
 
 function Router() {
   return (
@@ -20,7 +21,7 @@ function Router() {
       <Route path="/movement" component={Movement} />
       <Route path="/blog" component={Blog} />
       <Route path="/privacy" component={Privacy} />
-      <Route path="/globe" component={Globe} />
+      
       <Route component={NotFound} />
     </Switch>
   );
@@ -33,6 +34,7 @@ function App() {
         <Toaster />
         <Navbar />
         <Router />
+        <CookieConsent /> 
       </TooltipProvider>
     </QueryClientProvider>
   );
