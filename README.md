@@ -238,8 +238,3 @@ All rights reserved.
   Made with 💚 for a healthier, more transparent future
 </p>
 
-<p align="center">
-  <a href="https://your-website.com">Website</a> •
-  <a href="https://your-website.com/contact">Contact</a> •
-  <a href="https://your-website.com/privacy">Privacy</a>
-</p>
