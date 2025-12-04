@@ -1,168 +1,245 @@
-🌱 The Lively Three
-A Citizen-Driven Movement for Better Nutrition
-<p align="center"> <img src="https://dummyimage.com/1200x260/0f172a/ffffff&text=THE+LIVELY+THREE" alt="banner"/> </p> <p align="center"> <strong>Track smarter. Eat better. Own your data.</strong><br/> The Lively Three empowers individuals to improve their intake of fiber, protein, and micronutrients while preserving full ownership of their personal data. </p>
-🏷️ Badges
-<p align="center"> <img src="https://img.shields.io/badge/React-18-61dafb?style=for-the-badge&logo=react&logoColor=black" /> <img src="https://img.shields.io/badge/Vite-5-646CFF?style=for-the-badge&logo=vite&logoColor=white" /> <img src="https://img.shields.io/badge/TypeScript-Ready-3178C6?style=for-the-badge&logo=typescript&logoColor=white" /> <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" /> <img src="https://img.shields.io/badge/Data%20Ethics-Citizen%20Owned-green?style=for-the-badge" /> </p>
-📌 Table of Contents
+# 🌱 The Lively Three
 
-Overview
+**A Citizen-Driven Movement for Better Nutrition**
 
-Features
+<p align="center">
+  <img src="https://dummyimage.com/1200x260/0f172a/ffffff&text=THE+LIVELY+THREE" alt="The Lively Three Banner"/>
+</p>
 
-Timeline
+<p align="center">
+  <strong>Track smarter. Eat better. Own your data.</strong><br/>
+  Empowering individuals to improve their fiber, protein, and micronutrient intake<br/>
+  while preserving complete ownership of their personal data.
+</p>
 
-Mission
+---
 
-Tech Stack
+## 🏷️ Project Status
 
-Project Structure
+<p align="center">
+  <img src="https://img.shields.io/badge/React-18-61dafb?style=for-the-badge&logo=react&logoColor=black" alt="React 18"/>
+  <img src="https://img.shields.io/badge/Vite-5-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 5"/>
+  <img src="https://img.shields.io/badge/TypeScript-Ready-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"/>
+  <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" alt="Active"/>
+  <img src="https://img.shields.io/badge/Data%20Ethics-Citizen%20Owned-green?style=for-the-badge" alt="Data Ethics"/>
+</p>
 
-Getting Started
+---
 
-Development
+## 📑 Table of Contents
 
-Contributing
+- [Overview](#-overview)
+- [Key Features](#-key-features)
+- [Our Mission](#-our-mission)
+- [Development Roadmap](#-development-roadmap)
+- [Technology Stack](#-technology-stack)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+- [Development](#-development)
+- [Contributing](#-contributing)
+- [License](#-license)
 
-License
+---
 
-✨ Overview
+## 📖 Overview
 
-Only 1 in 10 people meet the daily recommended fiber intake.
-The Lively Three aims to change this by providing a simple, transparent, and ethical approach to nutrition tracking — combining science, technology, and community participation.
+> **Did you know?** Only 1 in 10 people meet the daily recommended fiber intake.
 
-This repository contains the official website for The Lively Three, built for:
+**The Lively Three** is changing this reality through a simple, transparent, and ethical approach to nutrition tracking. We combine science, technology, and community participation to help people take control of their nutritional health.
 
-Public awareness
+This repository contains the official website for The Lively Three movement, designed to serve as:
 
-Movement introduction
+- **Public awareness hub** — Educating visitors about the importance of balanced nutrition
+- **Movement introduction** — Sharing our vision and values
+- **Transparency center** — Communicating our ethical data practices
+- **App gateway** — Onboarding users to our tracking platform
+- **Community space** — Hosting blog content, contact information, and legal documentation
 
-Ethics & transparency communication
+---
 
-App onboarding
+## ✨ Key Features
 
-Blog, contact, and legal documents
+### 🌿 Nutrition Education & Movement
+- Clear explanation of our **"Fiber–Protein–Micronutrients"** framework
+- Educational resources centered on sustainable, long-term well-being
+- Thoughtfully designed sections presenting our mission and core values
 
-🚀 Features
-🌿 Nutrition & Movement
+### 📱 Application Experience
+- Prominent download call-to-action
+- Clean, intuitive visuals explaining app functionality and benefits
+- Seamless onboarding experience
 
-Clear explanation of the “Fiber–Protein–Micronutrients” framework
+### 🗓️ Vision Timeline
+A structured roadmap showcasing our platform evolution:
+1. **Foundation & Ethics** — Building on principles of data ownership
+2. **Beta Launch** — Initial release to early adopters
+3. **Trust & Community Building** — Growing our user base and gathering feedback
+4. **Personalization & Sustainability Leadership** — Advanced features and impact scaling
 
-Educational movement centered on long-term well-being
+### 🔒 Transparency Hub
+- Comprehensive Privacy Policy (effective May 28, 2025)
+- Terms of Service
+- Data governance principles and commitments
+- Clear documentation of user rights
 
-Thoughtfully designed sections presenting the mission and values
+### 📬 Community Engagement
+- Dedicated contact page
+- Support resources and FAQs
+- Account management guidance
 
-📱 App Introduction
+---
 
-Download CTA
+## 🎯 Our Mission
 
-Clean visuals for explaining app purpose and functionality
+The Lively Three is founded on a fundamental principle:
 
-🧭 Vision Timeline
+> **Health data belongs to the individual — always.**
 
-A structured roadmap showcasing the evolution of the platform:
+We are committed to building:
 
-Foundation & Ethics
+- ✅ A **trustworthy ecosystem** where users feel safe and respected
+- ✅ **Transparent data contracts** with clear terms and no hidden clauses
+- ✅ **Non-exclusive rights** ensuring users retain full control of their analytics
+- ✅ A **citizen-powered sustainability network** driving meaningful change
 
-Beta Launch
+---
 
-Trust & Community Building
+## 🔮 Development Roadmap
 
-Personalization & Sustainability Leadership
+Our journey is organized into four strategic phases:
 
-🔒 Transparency Hub
+| Phase | Focus Area | Key Deliverables |
+|-------|-----------|------------------|
+| **Phase 1** | Foundation & Ethics | Core platform, privacy framework, ethical guidelines |
+| **Phase 2** | Beta Launch | Public release, user onboarding, feedback systems |
+| **Phase 3** | Community Growth | Trust building, community features, user engagement |
+| **Phase 4** | Innovation | AI personalization, sustainability tracking, impact metrics |
 
-Privacy Policy (effective 28 May 2025)
+---
 
-Terms of Service
+## 🛠️ Technology Stack
 
-Data governance principles
+| Category | Technology |
+|----------|-----------|
+| **Framework** | React 18 |
+| **Build Tool** | Vite 5 |
+| **Language** | TypeScript |
+| **Styling** | Tailwind CSS / Custom CSS |
+| **Deployment** | *Netlify / Vercel / Cloudflare Pages* |
+| **CI/CD** | GitHub Actions *(optional)* |
 
-📬 Communication
+---
 
-Contact page
+## 📂 Project Structure
 
-Support & Account deletion guide
-
-🔮 Mission
-
-The Lively Three stands on the principle that:
-
-Health data belongs to the individual — always.
-
-We aim to build:
-
-A trustworthy ecosystem
-
-Transparent data contracts
-
-Non-exclusive rights to analytics
-
-A citizen-powered sustainability network
-
-🧠 Tech Stack
-Category	Technology
-Framework	React
-Tooling	Vite
-Language	TypeScript
-Styling	Tailwind / Custom CSS
-Deployment	(Netlify / Vercel / Cloudflare Pages — fill yours)
-CI/CD	GitHub Actions (optional)
-📂 Project Structure
-.
+```
+the-lively-three/
 ├── public/
 │   ├── favicon.png
 │   ├── robots.txt
 │   └── sitemap.xml
 ├── src/
-│   ├── components/
-│   ├── pages/
-│   ├── assets/
-│   └── main.tsx
-├── content/             # optional for blog
-├── generate-sitemap.mjs # utility script (if enabled)
-└── package.json
+│   ├── components/      # Reusable UI components
+│   ├── pages/           # Page-level components
+│   ├── assets/          # Images, fonts, and static files
+│   └── main.tsx         # Application entry point
+├── content/             # Blog posts and articles (optional)
+├── generate-sitemap.mjs # SEO sitemap generation utility
+└── package.json         # Project dependencies and scripts
+```
 
-⚙️ Getting Started
-1. Clone the repository
-git clone https://github.com/YOUR-ORG/the-lively-three.git
-cd the-lively-three
+---
 
-2. Install dependencies
-npm install
+## 🚀 Getting Started
 
-3. Start the development server
-npm run dev
+### Prerequisites
 
+Ensure you have the following installed:
+- **Node.js** (v18 or higher)
+- **npm** or **yarn**
 
-Your site will be available at:
+### Installation
 
-http://localhost:5173/
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/YOUR-ORG/the-lively-three.git
+   cd the-lively-three
+   ```
 
-🔧 Development
-Run development mode
-npm run dev
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-Build for production
-npm run build
+3. **Start the development server**
+   ```bash
+   npm run dev
+   ```
 
-Preview production build
-npm run preview
+4. **Open your browser**
+   
+   Navigate to: `http://localhost:5173/`
 
-🤝 Contributing
+---
 
-We welcome contributions that align with The Lively Three’s mission and ethical standards.
+## 🔧 Development
 
-Contribution steps
+### Available Scripts
 
-Fork this repository
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server with hot reload |
+| `npm run build` | Create optimized production build |
+| `npm run preview` | Preview production build locally |
+| `npm run lint` | Run code linting *(if configured)* |
 
-Create a feature branch
+### Development Workflow
 
-Commit your changes
+1. Create a new branch for your feature
+2. Make your changes following our code style guidelines
+3. Test thoroughly in development mode
+4. Build and preview before submitting
+5. Open a pull request with a clear description
 
-Open a pull request
+---
 
-📄 License
+## 🤝 Contributing
 
-© 2025 The Lively Three — Powered by Beeqster GmbH
+We warmly welcome contributions that align with The Lively Three's mission and ethical standards.
+
+### How to Contribute
+
+1. **Fork** this repository
+2. **Create** a feature branch (`git checkout -b feature/AmazingFeature`)
+3. **Commit** your changes (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** to your branch (`git push origin feature/AmazingFeature`)
+5. **Open** a Pull Request
+
+### Contribution Guidelines
+
+- Follow existing code style and conventions
+- Write clear, descriptive commit messages
+- Add comments for complex logic
+- Update documentation as needed
+- Ensure all tests pass before submitting
+
+---
+
+## 📄 License
+
+**© 2025 The Lively Three**  
+*Powered by Beeqster GmbH*
+
 All rights reserved.
+
+---
+
+<p align="center">
+  Made with 💚 for a healthier, more transparent future
+</p>
+
+<p align="center">
+  <a href="https://your-website.com">Website</a> •
+  <a href="https://your-website.com/contact">Contact</a> •
+  <a href="https://your-website.com/privacy">Privacy</a>
+</p>
